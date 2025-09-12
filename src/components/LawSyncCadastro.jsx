@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function LawSyncCadastro({ onSubmit }) {
+export default function LawSyncCadastro({ onSubmit, apiError }) {
   const [form, setForm] = useState({ nome: "", email: "", senha: "" });
   const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,10 @@ export default function LawSyncCadastro({ onSubmit }) {
       </h1>
 
       <form className="cadastro-form" onSubmit={handleSubmit} noValidate>
-        <label className="field">
+        {/* Nome */}
+        <label
+          className={`field ${touched.nome && errors.nome ? "has-error" : ""}`}
+        >
           <span className="label">Nome</span>
           <input
             type="text"
@@ -54,7 +57,14 @@ export default function LawSyncCadastro({ onSubmit }) {
           )}
         </label>
 
-        <label className="field">
+        {/* Email */}
+        <label
+          className={`field ${
+            (touched.email && errors.email) || apiError?.field === "email"
+              ? "has-error"
+              : ""
+          }`}
+        >
           <span className="label">Email</span>
           <input
             type="email"
@@ -67,9 +77,17 @@ export default function LawSyncCadastro({ onSubmit }) {
           {touched.email && errors.email && (
             <small className="error">{errors.email}</small>
           )}
+          {apiError?.field === "email" && (
+            <small className="error">{apiError.text}</small>
+          )}
         </label>
 
-        <label className="field">
+        {/* Senha */}
+        <label
+          className={`field ${
+            touched.senha && errors.senha ? "has-error" : ""
+          }`}
+        >
           <span className="label">Senha</span>
           <input
             type="password"
