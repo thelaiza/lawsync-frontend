@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom"; 
 
-export default function LawSyncCadastro({ onSubmit, apiError }) {
-  const [form, setForm] = useState({ nome: "", email: "", senha: "" });
+export default function LawSyncLogin({ onSubmit }) {
+  const [form, setForm] = useState({ email: "", senha: "" });
   const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -9,21 +10,19 @@ export default function LawSyncCadastro({ onSubmit, apiError }) {
     setForm((f) => ({ ...f, [field]: e.target.value }));
 
   const errors = {
-    nome: !form.nome ? "Informe seu nome" : null,
     email: !/^\S+@\S+\.\S+$/.test(form.email) ? "Email inválido" : null,
-    senha: form.senha.length < 6 ? "Mínimo de 6 caracteres" : null,
+    senha: !form.senha ? "Informe sua senha" : null,
   };
 
   const hasError = Object.values(errors).some(Boolean);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setTouched({ nome: true, email: true, senha: true });
+    setTouched({ email: true, senha: true });
     if (hasError) return;
     try {
       setLoading(true);
       await onSubmit?.({
-        name: form.nome,
         email: form.email,
         password: form.senha,
       });
@@ -33,38 +32,13 @@ export default function LawSyncCadastro({ onSubmit, apiError }) {
   };
 
   return (
-    <section className="cadastro-card" aria-labelledby="cadastro-title">
-      <h1 id="cadastro-title" className="cadastro-title">
-        Cadastre-se
+    <section className="login-card" aria-labelledby="login-title">
+      <h1 id="login-title" className="login-title">
+        Faça Login
       </h1>
 
-      <form className="cadastro-form" onSubmit={handleSubmit} noValidate>
-        {/* Nome */}
-        <label
-          className={`field ${touched.nome && errors.nome ? "has-error" : ""}`}
-        >
-          <span className="label">Nome</span>
-          <input
-            type="text"
-            placeholder="Maria"
-            value={form.nome}
-            onChange={set("nome")}
-            onBlur={() => setTouched((t) => ({ ...t, nome: true }))}
-            aria-invalid={!!(touched.nome && errors.nome)}
-          />
-          {touched.nome && errors.nome && (
-            <small className="error">{errors.nome}</small>
-          )}
-        </label>
-
-        {/* Email */}
-        <label
-          className={`field ${
-            (touched.email && errors.email) || apiError?.field === "email"
-              ? "has-error"
-              : ""
-          }`}
-        >
+      <form className="login-form" onSubmit={handleSubmit} noValidate>
+        <label className="field">
           <span className="label">Email</span>
           <input
             type="email"
@@ -77,17 +51,9 @@ export default function LawSyncCadastro({ onSubmit, apiError }) {
           {touched.email && errors.email && (
             <small className="error">{errors.email}</small>
           )}
-          {apiError?.field === "email" && (
-            <small className="error">{apiError.text}</small>
-          )}
         </label>
 
-        {/* Senha */}
-        <label
-          className={`field ${
-            touched.senha && errors.senha ? "has-error" : ""
-          }`}
-        >
+        <label className="field">
           <span className="label">Senha</span>
           <input
             type="password"
@@ -107,9 +73,14 @@ export default function LawSyncCadastro({ onSubmit, apiError }) {
           type="submit"
           disabled={loading || hasError}
         >
-          {loading ? "Enviando..." : "Cadastro"}
+          {loading ? "Entrando..." : "Login"}
         </button>
       </form>
+      
+      <p className="signup-link">
+        Não tem uma conta?{" "}
+        <Link to="/cadastro">Cadastre-se</Link>
+      </p>
     </section>
   );
 }
