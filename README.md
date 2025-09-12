@@ -1,4 +1,3 @@
-# lawsync-frontend
 <h1 align="center">📅 LawSync: Agenda Jurídica Digital (Frontend) ⚖️</h1>
 
 <p align="center">
