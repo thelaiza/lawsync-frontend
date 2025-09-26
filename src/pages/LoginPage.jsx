@@ -1,12 +1,51 @@
+import { useState } from "react"; // 1. Importar os hooks necessários
+import { useNavigate, useLocation } from "react-router-dom";
 import LawSyncLogin from "../components/LawSyncLogin.jsx";
 import "../styles/login.css";
 
 export default function LoginPage() {
+  // 2. Declarar os estados que estavam faltando
+  const [message, setMessage] = useState(null);
+  const [apiError, setApiError] = useState(null);
+  
+  // Hooks para navegação após o login
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/dashboard";
+
   const handleSubmit = async (payload) => {
-    // aqui você integra com seu backend (fetch/axios) para autenticar
-    // por enquanto, apenas exibimos os dados no console
-    console.log("Login submit:", payload);
-    alert("Login enviado! (verifique o console para ver os dados)");
+    setMessage(null);
+    setApiError(null);
+
+    try {
+      // Lógica completa de integração com o backend
+      const res = await fetch("http://localhost:3001/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setApiError({
+          field: data.field || "email",
+          text: data.message || "Email ou senha inválidos.",
+        });
+        throw new Error(data.message || "Falha ao autenticar.");
+      }
+
+      // Se o login for bem-sucedido
+      const { token, user } = data;
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("authUser", JSON.stringify(user));
+      navigate(from, { replace: true });
+
+    } catch (err) {
+      if (!apiError) {
+        setMessage({ type: "error", text: err.message });
+      }
+    }
   };
 
   return (
@@ -19,7 +58,27 @@ export default function LoginPage() {
       </aside>
 
       <main className="form-side">
-        <LawSyncLogin onSubmit={handleSubmit} />
+        {message && (
+          <div
+            className={`alert ${message.type}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              marginBottom: 20,
+              padding: "12px 16px",
+              borderRadius: 8,
+              fontSize: 14,
+              fontWeight: 500,
+              border: `1px solid ${message.type === "error" ? "#fca5a5" : "#6ee7b7"}`,
+              color: message.type === "error" ? "#b91c1c" : "#065f46",
+            }}
+          >
+            {message.text}
+          </div>
+        )}
+
+        <LawSyncLogin onSubmit={handleSubmit} apiError={apiError} />
       </main>
     </div>
   );
