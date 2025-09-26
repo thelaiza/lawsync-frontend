@@ -29,7 +29,7 @@ Este repositório contém o código-fonte do **frontend** da aplicação **LawSy
 
 1.  **Clone o repositório:**
     ```sh
-    git clone [https://github.com/anamariasilva/front-end](https://github.com/anamariasilva/front-end)
+    git clone [https://github.com/thelaiza/lawsync-frontend.git]
     ```
 2.  **Instale as dependências:**
     ```sh
