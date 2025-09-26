@@ -1,0 +1,42 @@
+.ls-dashboard .ls-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 18px;
+  border: 1px solid #eee;
+}
+
+.ls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ls-tile {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  padding: 16px;
+}
+
+.ls-tile-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.ls-tile-empty {
+  color: #777;
+}
+
+.ls-list {
+  padding-left: 18px;
+}
+
+.ls-list a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.ls-list a:hover {
+  text-decoration: underline;
+}

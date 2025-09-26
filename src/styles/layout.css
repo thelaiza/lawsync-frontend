@@ -1,0 +1,30 @@
+.ls-shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background: #f0f0f0;
+}
+
+.ls-main {
+  padding: 24px 24px 48px;
+}
+
+.ls-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0 24px;
+}
+
+.ls-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.ls-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
