@@ -1,16 +1,35 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CadastroPage from "./pages/CadastroPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import LoginPage from "./pages/LoginPage";
+import CadastroPage from "./pages/CadastroPage";
+
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import Calendar from "./pages/Calendar";
+import NewAppointment from "./pages/NewAppointment";
+
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
+  const isAuthed = !!localStorage.getItem("authToken");
+
   return (
     <BrowserRouter>
       <Routes>
-        {/* rota para a página de login (página inicial) */}
-        <Route path="/" element={<LoginPage />} />
-
-        {/* rota para a página de cadastro */}
+        {/* públicas */}
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/cadastro" element={<CadastroPage />} />
+
+        {/* privadas */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/perfil" element={<Profile />} />
+          <Route path="/agenda" element={<Calendar />} />
+          <Route path="/compromissos/novo" element={<NewAppointment />} />
+        </Route>
+
+        {/* fallback */}
+        <Route path="*" element={<Navigate to={isAuthed ? "/dashboard" : "/login"} replace />} />
       </Routes>
     </BrowserRouter>
   );
