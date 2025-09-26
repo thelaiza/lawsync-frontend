@@ -4,7 +4,7 @@ import LawSyncLogin from "../components/LawSyncLogin.jsx";
 import "../styles/login.css";
 
 export default function LoginPage() {
-  const [message, setMessage] = useState(null);   // banner opcional (sucesso/erro geral)
+  const [message, setMessage] = useState(null);    // banner opcional (sucesso/erro geral)
   const [apiError, setApiError] = useState(null); // erro de campo vindo do back (ex.: email/senha)
   const navigate = useNavigate();
   const location = useLocation();
@@ -74,18 +74,4 @@ export default function LoginPage() {
               fontSize: 14,
               fontWeight: 500,
               border: `1px solid ${message.type === "error" ? "#fca5a5" : "#6ee7b7"}`,
-              color: message.type === "error" ? "#b91c1c" : "#065f46",
-              background: message.type === "error" ? "#fee2e2" : "#d1fae5",
-            }}
-          >
-            <span>{message.type === "error" ? "⚠️" : "✅"}</span>
-            <span>{message.text}</span>
-          </div>
-        )}
-
-        {/* erro de campo do back vai para o componente do formulário */}
-        <LawSyncLogin onSubmit={handleSubmit} apiError={apiError} />
-      </main>
-    </div>
-  );
-}
+              color: message.type === "error" ? "#b91c1c"

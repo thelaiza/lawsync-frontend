@@ -1,13 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
 import LoginPage from "./pages/LoginPage";
 import CadastroPage from "./pages/CadastroPage";
-
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Calendar from "./pages/Calendar";
 import NewAppointment from "./pages/NewAppointment";
-
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
