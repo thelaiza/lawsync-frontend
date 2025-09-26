@@ -1,14 +1,12 @@
-import { useState } from "react"; // 1. Importar os hooks necessários
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import LawSyncLogin from "../components/LawSyncLogin.jsx";
 import "../styles/login.css";
 
 export default function LoginPage() {
-  // 2. Declarar os estados que estavam faltando
   const [message, setMessage] = useState(null);
   const [apiError, setApiError] = useState(null);
   
-  // Hooks para navegação após o login
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
@@ -18,7 +16,6 @@ export default function LoginPage() {
     setApiError(null);
 
     try {
-      // Lógica completa de integração com o backend
       const res = await fetch("http://localhost:3001/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,7 +32,6 @@ export default function LoginPage() {
         throw new Error(data.message || "Falha ao autenticar.");
       }
 
-      // Se o login for bem-sucedido
       const { token, user } = data;
       localStorage.setItem("authToken", token);
       localStorage.setItem("authUser", JSON.stringify(user));
