@@ -4,7 +4,6 @@ import CadastroPage from "./pages/CadastroPage";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Calendar from "./pages/Calendar";
-import NewAppointment from "./pages/NewAppointment";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -22,7 +21,6 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/perfil" element={<Profile />} />
           <Route path="/agenda" element={<Calendar />} />
-          <Route path="/compromissos/novo" element={<NewAppointment />} />
         </Route>
 
         {/* fallback */}
