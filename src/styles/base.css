@@ -1,33 +1,57 @@
-:root {
-  --bg: #f3f3f3;
-  --panel: #ffffff;
-  --ink: #111;
-  --muted: #6b7280;
-  --line: #e5e7eb;
-  --primary: #9aa0ae; /* tom do botão do seu mock */
-  --radius: 14px;
-}
-
+/* Reset e estilos base */
 * {
   box-sizing: border-box;
 }
+
 html,
 body,
 #root {
   height: 100%;
-}
-body {
   margin: 0;
-  color: var(--ink);
-  font: 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
-    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-  background: var(--bg);
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background: #f8f9fa;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 input,
-button {
+button,
+textarea,
+select {
   font: inherit;
 }
-label {
-  display: block;
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
