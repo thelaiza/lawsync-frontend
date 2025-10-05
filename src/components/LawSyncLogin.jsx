@@ -32,12 +32,15 @@ export default function LawSyncLogin({ onSubmit }) {
   };
 
   return (
-    <section className="login-card" aria-labelledby="login-title">
-      <h1 id="login-title" className="login-title">
+    <section className="auth-form" aria-labelledby="login-title">
+      <h2 id="login-title" className="auth-title">
         Faça Login
-      </h1>
+      </h2>
+      <p className="auth-description">
+        Entre com suas credenciais para acessar sua agenda
+      </p>
 
-      <form className="login-form" onSubmit={handleSubmit} noValidate>
+      <form className="auth-form-fields" onSubmit={handleSubmit} noValidate>
         <label className="field">
           <span className="label">Email</span>
           <input
@@ -69,18 +72,20 @@ export default function LawSyncLogin({ onSubmit }) {
         </label>
 
         <button
-          className="primary-btn"
+          className="auth-btn auth-btn-primary"
           type="submit"
           disabled={loading || hasError}
         >
-          {loading ? "Entrando..." : "Login"}
+          {loading ? "Entrando..." : "Entrar"}
         </button>
       </form>
       
-      <p className="signup-link">
-        Não tem uma conta?{" "}
-        <Link to="/cadastro">Cadastre-se</Link>
-      </p>
+      <div className="auth-footer">
+        <p className="auth-link">
+          Não tem uma conta?{" "}
+          <Link to="/cadastro">Cadastre-se aqui</Link>
+        </p>
+      </div>
     </section>
   );
 }

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import LawSyncLogin from "../components/LawSyncLogin.jsx";
-import "../styles/login.css";
+import "../styles/auth.css";
 
 export default function LoginPage() {
   const [message, setMessage] = useState(null);
   const [apiError, setApiError] = useState(null);
-  
+  const { login } = useAuth();
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
@@ -16,66 +18,37 @@ export default function LoginPage() {
     setApiError(null);
 
     try {
-      const res = await fetch("http://localhost:3001/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setApiError({
-          field: data.field || "email",
-          text: data.message || "Email ou senha inválidos.",
-        });
-        throw new Error(data.message || "Falha ao autenticar.");
-      }
-
-      const { token, user } = data;
-      localStorage.setItem("authToken", token);
-      localStorage.setItem("authUser", JSON.stringify(user));
+      await login(payload.email, payload.password);
       navigate(from, { replace: true });
-
     } catch (err) {
-      if (!apiError) {
-        setMessage({ type: "error", text: err.message });
-      }
+      console.error('Erro no login:', err);
+      setMessage({ 
+        type: "error", 
+        text: err.message || "Erro ao fazer login. Tente novamente." 
+      });
     }
   };
 
   return (
-    <div className="login-layout">
-      <aside className="brand-side">
-        <div className="brand-box">
-          <span className="brand-line">Law</span>
-          <span className="brand-line">Sync</span>
-        </div>
-      </aside>
-
-      <main className="form-side">
-        {message && (
-          <div
-            className={`alert ${message.type}`}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              marginBottom: 20,
-              padding: "12px 16px",
-              borderRadius: 8,
-              fontSize: 14,
-              fontWeight: 500,
-              border: `1px solid ${message.type === "error" ? "#fca5a5" : "#6ee7b7"}`,
-              color: message.type === "error" ? "#b91c1c" : "#065f46",
-            }}
-          >
-            {message.text}
+    <div className="auth-layout">
+      <div className="auth-container">
+        <div className="auth-header">
+          <div className="auth-logo">
+            <h1 className="logo-text">LawSync</h1>
           </div>
-        )}
+          <p className="auth-subtitle">Sistema de Agenda Jurídica</p>
+        </div>
 
-        <LawSyncLogin onSubmit={handleSubmit} apiError={apiError} />
-      </main>
+        <div className="auth-card">
+          {message && (
+            <div className={`auth-alert ${message.type}`}>
+              {message.text}
+            </div>
+          )}
+
+          <LawSyncLogin onSubmit={handleSubmit} apiError={apiError} />
+        </div>
+      </div>
     </div>
   );
 }
