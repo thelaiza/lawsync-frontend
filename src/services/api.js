@@ -1,5 +1,6 @@
 // Configuração da API
-const API_BASE_URL = "http://localhost:4000/api";
+// const API_BASE_URL = "http://localhost:4000/api"; local
+const API_BASE_URL = "https://lawsync-backend-production.up.railway.app/api";
 
 // Função para fazer requisições autenticadas
 const apiRequest = async (endpoint, options = {}) => {
